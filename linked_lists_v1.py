@@ -70,7 +70,7 @@ class DoubleLinkedList(object):
         while x != self.nil and x.key != k:
             x = x.next
         self.point = x
-        # return self.point
+        return self.point
 
 def build_list(first_key):
     DLL = DoubleLinkedList(1)
@@ -84,5 +84,6 @@ if __name__ is '__main__':
     DLL.insert_cell(16)
     DLL.insert_cell(9)
     DLL.insert_cell(25)
-    DLL.search(9)
-    DLL.delete_cell(DLL.point)
+    to_delete = DLL.search(9)
+    DLL.delete_cell(to_delete)
+    print('done')
