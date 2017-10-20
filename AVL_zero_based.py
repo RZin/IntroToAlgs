@@ -1,5 +1,5 @@
 #import random, math
-
+# todo make parent attr
 outputdebug = False
 
 def debug(msg):
@@ -13,6 +13,7 @@ class Node():
         self.key = key
         self.left = None
         self.right = None
+        self.parent = None
     def __repr__(self):
         return 'Node:'+str(self.key)
 
@@ -86,7 +87,7 @@ class AVLTree():
                 self.update_balances()
 
     def rrotate(self):
-        # Rotate left pivoting on self
+        # Rotate right pivoting on self
         debug ('Rotating ' + str(self.node.key) + ' right')
         # before
         A = self.node
@@ -154,6 +155,22 @@ class AVLTree():
             elif self.node.right.node == None:
                 raise ValueError('self.node.right.node == None, shouldn"t be here')
         self.rebalance()
+        return key
+
+    def find_min(self):
+        '''returns key of the minimum element'''
+        # if left is not leaf
+        if self.node.left.node != None:
+            key = self.node.left.find_min() # pull from leaf
+        # if left is leaf
+        else:
+            debug("popping ... " + str(self.node.key))
+            # if nothing on the left
+            if self.node.key:
+                key = self.node.key
+            else:
+                print('no key at node', self.node)
+                raise ValueError('no key at node ', self.node)
         return key
 
     def delete(self, key):
@@ -265,15 +282,15 @@ if __name__ == "__main__":
     a = AVLTree()
     print("----- Inserting -------")
     #inlist = [5, 2, 12, -4, 3, 21, 19, 25]
-    inlist = [7, 5, 2, 6, 3, 4, 1, 8, 9, 0]
-    # inlist = [1, 2, 3, 4, 5, 6]
+    # inlist = [7, 5, 2, 6, 3, 4, 1, 8, 9, 0]
+    inlist = [1, 2, 3, 4, 5, 6]
     for i in inlist:
          a.insert(i)
 
-    a.display()
+    # a.display()
 
     print("----- Deleting -------")
-    print("Inorder traversal:", a.inorder_traverse())
+    # print("Inorder traversal:", a.inorder_traverse())
 
     a.pop_min()
     a.pop_min()
